@@ -16,5 +16,6 @@ Example:
 
 The `#define` statements in `stm32_tm1637.c` must be updated to match the actual port and pins to which the display is connected.
 
-The driver takes a shortcut in that it does not read back or act on the status values returned by the display. This could be a problem for use cases in which the display is written to only rarely.
+The `_tm1637DelayUsec()` has not been tuned to delay for the actual number of microseconds provided in the argument.
 
+The driver takes a shortcut in that it does not read back or act on the status values returned by the display. This could be a problem for use cases in which the display is written to only rarely.
