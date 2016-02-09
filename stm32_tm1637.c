@@ -13,11 +13,14 @@ void _tm1637ClkLow(void);
 void _tm1637DioHigh(void);
 void _tm1637DioLow(void);
 
+// Configuration.
 
 #define CLK_PORT GPIOC
 #define DIO_PORT GPIOC
 #define CLK_PIN GPIO_PIN_0
 #define DIO_PIN GPIO_PIN_1
+#define CLK_PORT_CLK_ENABLE __HAL_RCC_GPIOC_CLK_ENABLE
+#define DIO_PORT_CLK_ENABLE __HAL_RCC_GPIOC_CLK_ENABLE
 
 
 const char segmentMap[] = {
@@ -29,7 +32,8 @@ const char segmentMap[] = {
 
 void tm1637Init(void)
 {
-    __HAL_RCC_GPIOC_CLK_ENABLE();
+    CLK_PORT_CLK_ENABLE();
+    DIO_PORT_CLK_ENABLE();
     GPIO_InitTypeDef g = {0};
     g.Pull = GPIO_PULLUP;
     g.Mode = GPIO_MODE_OUTPUT_OD; // OD = open drain
@@ -39,7 +43,7 @@ void tm1637Init(void)
     g.Pin = DIO_PIN;
     HAL_GPIO_Init(DIO_PORT, &g);
 
-    //tm1637SetBrightness(8);
+    tm1637SetBrightness(8);
 }
 
 void tm1637DisplayDecimal(int v, int displaySeparator)
